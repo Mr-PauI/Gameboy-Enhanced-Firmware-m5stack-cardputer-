@@ -74,19 +74,19 @@ List of SGB and Analogue Pocket enhanced titles:
 * Yoshi
 
 14.10.2025:v0,78.36
-*added fixes for donkey kong land 2/3
-*fixed sgb border behaviour when exiting an sgb enhanced game
-*fixed palette not resetting after game exit
-*removed savegame indicator when exiting a game and associated pause
-*autosave no longer triggered on setting menu return
-*increased swap speed
-*removed audio clipping
+* added fixes for donkey kong land 2/3
+* fixed sgb border behaviour when exiting an sgb enhanced game
+* fixed palette not resetting after game exit
+* removed savegame indicator when exiting a game
+* autosave no longer triggered on setting menu return
+* increased swap speed
+* removed audio clipping
 
-13.10.2025;v0.78.35
-*increased performance in all interlaced and non interlaced modes(will be an option in future but its a world of difference, no drops in pokemon menus, etc)
-*removed old settings from menu
-*more efficient use of 2nd core(bass boost temporarily disabled)
-*audio sampling rate increased
+13.10.2025:v0.78.35
+* increased performance in all interlaced and non interlaced modes(will be an option in future but its a world of difference, no drops in pokemon menus, etc)
+* removed old settings from menu
+* more efficient use of 2nd core(bass boost temporarily disabled)
+* audio sampling rate increased
 
 12.10.2025:v0.78.31
 * fixed bug with cpu mode setting(increased responsiveness)
