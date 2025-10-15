@@ -73,8 +73,41 @@ List of SGB and Analogue Pocket enhanced titles:
 * Yakyuman
 * Yoshi
 
+14.10.2025:v0,78.36
+*added fixes for donkey kong land 2/3
+*fixed sgb border behaviour when exiting an sgb enhanced game
+*fixed palette not resetting after game exit
+*removed savegame indicator when exiting a game and associated pause
+*autosave no longer triggered on setting menu return
+*increased swap speed
+*removed audio clipping
 
-24.07.2024:0.78
+13.10.2025;v0.78.35
+*increased performance in all interlaced and non interlaced modes(will be an option in future but its a world of difference, no drops in pokemon menus, etc)
+*removed old settings from menu
+*more efficient use of 2nd core(bass boost temporarily disabled)
+*audio sampling rate increased
+
+12.10.2025:v0.78.31
+* fixed bug with cpu mode setting(increased responsiveness)
+* increased interlacing/interleaving speed
+* added sparse interlacing mode
+  
+11.10.2025:v0.78.21
+* maximized file list generation speed.
+* improved exit game function, immediate now.
+
+10.10.2025:v0.78.20
+* added basic file/directory sorting functions(oversight from long ago finally corrected)
+* fixed file browsing bug after exiting a game
+* improved exit game function, smoother exit from menu
+
+09.10.2025:v0.78.10
+* Removed last usage of malloc in preparation for modularity
+* Updated cpu core, Final Fantasy Legends III among others now work as expected. 
+* Updated to latest m5stack libraries, cardputer adv officially supported. End of adv testing phase.
+
+24.07.2024:v0.78
 
 * Reduced overall volume; it still draws enough power to cause the backlight to flicker with the boost on full effect and volume maxed but it was flickering badly with the new amplification code.
 * Added revision number to boot sequence
