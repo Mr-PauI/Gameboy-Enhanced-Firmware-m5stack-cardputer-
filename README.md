@@ -12,9 +12,9 @@ This is a resource I have created to help other developers learn and develop qua
 
 Updates are more frequent on m5burner than github, but I'm trying to drop a binary here now and then.
 
-Gameboy Emulator; complete with audio, configurable controls, display and performance options, savegames, save states, filesystem navigation and no .gb rom file size limits imposed by memory. Various other enhancements. Accurate palettes. Partial Super Gameboy Enhancement support, including borders. Extended 12 colour mode, along with all official/original GBC palettes. 44 Analogue Pocket 12 colour community palettes included with automatic mapping of titles to AP palettes partially implemented.
+Gameboy/Gameboy Color Emulator; complete with audio, configurable controls, display and performance options, savegames, save states, filesystem navigation and no .gb/.gbc rom file size limits imposed by memory. Various other enhancements. Accurate palettes. Partial Super Gameboy Enhancement support, including borders. Extended 12 colour mode, along with all official/original GBC palettes. 44 Analogue Pocket 12 colour community palettes included with automatic mapping of titles to AP palettes partially implemented.
 
-Pokemon Silver/Gold,  Dragon Warrior I&II and Azure dreams are the only confirmed fully supported .gbc titles, backwards compatible with the original gameboy and run in that mode. Emulator will behave as if you placed a gameboy colour cartridge into an original gameboy in most instances. Feel free to try other backwards compatible gbc games, but no garuntees on compatiblity. All *.gb and *.gbc files are listed by the file explorer in the current directory. 
+All *.gb and *.gbc files are listed by the file explorer in the current directory. 
 
 Read the instructions at the bottom for controls or refer to the graphic guide below. Forked from original gb_cardputer implementation. No bootloader has been merged with this firmware (at this time), so if you are having issues try using m5launcher to install.
 
@@ -73,7 +73,23 @@ List of SGB and Analogue Pocket enhanced titles:
 * Yakyuman
 * Yoshi
 
-14.10.2025:v0,78.36
+18.10.2025:v0.79.00
+* added gameboy colour support to main project
+* added save message on menu entry if saving
+* increased audio volume effective range
+* added message when trying to change cgb to dmg/sgb colours
+* automatic cgb enhance used for pokemon yellow
+* dmg/sgb compatibility enabled
+* fixed crash on error
+
+17.10.2025:v0.78.40
+* improved audio quality
+
+15.10.2025:v0.78.38
+* some small improvement to entry of settings menu speed
+* added fixes for donkey kong land 2/3
+
+14.10.2025:v0.78.36
 * added fixes for donkey kong land 2/3
 * fixed sgb border behaviour when exiting an sgb enhanced game
 * fixed palette not resetting after game exit
