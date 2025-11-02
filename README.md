@@ -23,6 +23,10 @@ Read the instructions at the bottom for controls or refer to the graphic guide b
 
 ![image](https://github.com/Mr-PauI/Gameboy-Enhanced-Firmware-m5stack-cardputer-/assets/169319235/5c78d59e-ae08-46ed-9522-f11b659504ed)
 
+Press \ to cycle through available display aspect ratios (note super gameboy border hidden/off-screen when in 16:9 or above)
+
+Press Fn+\ to cycle through available vertical scaling and alignment options
+
 List of SGB and Analogue Pocket enhanced titles:
 * Adventures of Lolo
 * Alleyway
@@ -72,6 +76,49 @@ List of SGB and Analogue Pocket enhanced titles:
 * X
 * Yakyuman
 * Yoshi
+
+1.11.2024:v0.79.30
+* interlacing now provides a further performance boost
+* full screen(16:9) is now the default scaling mode, sgb borders on by default if available for a game but hidden unless scaling mode changed
+* changed default palette for new users from black&white to the gameboy pocket palette
+* game specific borders on by default, must change aspect ratio to see them
+
+31.10.2025:v0.79.27
+* fixed rendering bug with centered vertical alignment
+* changed default aspect ratio to 12:10 for improved visibility
+
+30.10.2025:v0.79.26
+* Initial implementation of vertical scaling and alignment control, rotate through the various modes using Fn+\
+
+29.10.2025:v0.79.25
+* Initial implementation of full screen(and other) horizontal scaling modes, rotate through various aspect ratios(including over scanned resolutions) using the \ key
+
+28.10.2025:v0.79.22
+* fixed crash on palette changed introduced with v0.79.12
+* quick save/quick load feature now works correctly with cgb games
+
+27:.10.2025:v0.79.20
+* fixed save games not working or being corrupted when switching between games.
+* significantly increased the speed of Grand Theft Auto
+
+26.10.2025:v0.79.14
+* interlacing no longer causes screen distortion
+
+25.10.2025:v0.79.12
+* further performance improvements (all games,+2-4fps)
+
+24.10.2025:v0.79.08
+* overall performance improvement (all games)
+
+23.10.2025:v0.92.06
+* performance improvements 
+
+22.10.2025:v0.92.04
+* extended cpu fast mode compatibility to include cgb
+* fixed interlacing not synchronized with cgb games issue
+
+20.10.2025:v0.79.02
+* performance improvement for cgb games
 
 18.10.2025:v0.79.00
 * added gameboy colour support to main project
@@ -373,11 +420,18 @@ A/B use 'l' and 'k'
 start/select use '1' and '0'
 cycle palette in current mode use the ] square bracket
 cycle between classic gameboy,super gameboy & 12 color modes [
+quicksave/savestate press del/backspace key
+quickload/loadstate press minus/underscore key
 force cart ram backup press '=' (if uncertain of gamesave use this)
 turn on super gameboy border at any time by pressing Fn+'['
 cycle through border options by pressing Fn+']'
 Display current FPS by holding Fn; it will appear in 1 second and update every second there after, can cause some slowdown but that is accounted for in the FPS count.
 Press `/esc in the main menu or during gameplay for settings menu
+Mute audio using Fn+left arrow
+Raise audio to 50% then 100% using Fn+right arrow
+Change volume using Fn+up/down arrow keys for granular control
+Press \ to cycle through available display aspect ratios (note super gameboy border hidden/off-screen when in 16:9 or above)
+Press Fn+\ to cycle through available vertical scaling and alignment options
 
 Have fun!
 
