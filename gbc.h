@@ -1,3 +1,7 @@
+// Game Boy Color Palettes in indexed 24-bit RGB888 format
+// These are the official palettes that can normally be selected on the Game Boy Color
+// using various button combinations (all documented below). No additional palettes
+// are included. Each palette is represented as four 24-bit RGB values (0xRRGGBB) per row.
 #define GBC_PALETTE_COUNT 12
 const uint32_t GBC_PALETTES[] = {
 // Down + A
@@ -49,3 +53,4 @@ const uint32_t GBC_PALETTES[] = {
 0xFFFFFF, 0xFFAD63, 0x843100, 0x000000,
 0xFFFFFF, 0xFFAD63, 0x843100, 0x000000,
 };
+
