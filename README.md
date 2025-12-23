@@ -9,7 +9,8 @@ http://cardputer.free.nf/
 This is a resource I have created to help other developers learn and develop quality software for the CardPuter. If your frustrated at the lack of source code of the main project, oh well, I'm sharing with the community in my own way.
 
 
-<img width="289" height="272" alt="sgb_example" src="https://github.com/user-attachments/assets/d9ad8791-6d07-4beb-bb00-456f2dcbc216" />
+<img width="372" height="289" alt="GBElogo" src="https://github.com/user-attachments/assets/89982272-8962-4e52-8e58-da0c67ab674e" />
+
 
 
 Updates are more frequent on m5burner than github, but I'm trying to drop a binary here now and then.
@@ -20,7 +21,7 @@ All *.gb and *.gbc files are listed by the file explorer in the current director
 
 Read the instructions at the bottom for controls or refer to the graphic guide below. Forked from original gb_cardputer implementation. No bootloader has been merged with this firmware (at this time), so if you are having issues try using m5launcher to install.
 
-![image](https://github.com/Mr-PauI/Gameboy-Enhanced-Firmware-m5stack-cardputer-/assets/169319235/31c67758-ca57-4217-a3ef-25c20e5cc8f2)
+<img width="289" height="272" alt="sgb_example" src="https://github.com/user-attachments/assets/d9ad8791-6d07-4beb-bb00-456f2dcbc216" />
 
 
 ![image](https://github.com/Mr-PauI/Gameboy-Enhanced-Firmware-m5stack-cardputer-/assets/169319235/5c78d59e-ae08-46ed-9522-f11b659504ed)
