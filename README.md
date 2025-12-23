@@ -8,7 +8,8 @@ http://cardputer.free.nf/
 
 This is a resource I have created to help other developers learn and develop quality software for the CardPuter. If your frustrated at the lack of source code of the main project, oh well, I'm sharing with the community in my own way.
 
-![image](https://github.com/Mr-PauI/gb_cardputer_mod/assets/169319235/5a9bf85b-0a44-4f37-931b-c06ac70d62a3)
+<img width="372" height="289" alt="GBElogo" src="https://github.com/user-attachments/assets/905fc767-67df-439a-8ea0-b344548ff9c2" />
+
 
 Updates are more frequent on m5burner than github, but I'm trying to drop a binary here now and then.
 
