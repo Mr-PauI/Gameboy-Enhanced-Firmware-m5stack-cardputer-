@@ -1,12 +1,11 @@
-// Sound isn't done yet
-// (or might never be)
 #define ENABLE_SOUND 0
 #define ENABLE_LCD 1
 
 #define MAX_FILES 256
 
 #include "M5Cardputer.h"
-#include "peanutgb/peanut_gb.h"
+// Obtain the latest version of walnut_cgb.h header here https://github.com/Mr-PauI/Walnut-CGB to cotinue
+#include "walnut_cgb.h"
 #include "SD.h"
 
 #define DEST_W 240
@@ -19,8 +18,33 @@
 // SD card SPI class.
 SPIClass SPI2;
 
-// Second framebuffer to check for changed pixels.
-uint32_t swap_fb[LCD_HEIGHT][LCD_WIDTH];
+static inline uint16_t rgb888_to_rgb565(uint32_t rgb) {
+    return (uint16_t)(
+        ((rgb >> 8)  & 0xF800) |   // red
+        ((rgb >> 5)  & 0x07E0) |   // green
+        ((rgb >> 3)  & 0x001F)     // blue
+    );
+}
+
+#if WALNUT_GB_12_COLOUR
+uint32_t gboriginal_palette[] = { 0x7B8210, 0x5A7942, 0x39594A, 0x294139 , 0x7B8210, 0x5A7942, 0x39594A, 0x294139, 0x7B8210, 0x5A7942, 0x39594A, 0x294139  }; // rgb888 palette x3, must manually be set for each game for 12 colors
+uint16_t CURRENT_PALETTE_RGB565[12];  
+void update_palette()
+{
+  for (int i=0;i<12;i++)
+    CURRENT_PALETTE_RGB565[i]=rgb888_to_rgb565(gboriginal_palette[i]);
+}
+#else
+uint32_t gboriginal_palette[] = { 0x7B8210, 0x5A7942, 0x39594A, 0x294139 }; // rgb888 palette
+uint16_t CURRENT_PALETTE_RGB565[4];
+void update_palette()
+{
+  for (int i=0;i<4;i++)
+    CURRENT_PALETTE_RGB565[i]=rgb888_to_rgb565(gboriginal_palette[i]);
+}
+#endif
+
+
 
 // Prints debug info to the display.
 void debugPrint(const char* str) {
@@ -40,7 +64,7 @@ struct priv_t
 	uint8_t *cart_ram;
 
 	/* Frame buffer */
-	uint32_t fb[LCD_HEIGHT][LCD_WIDTH];
+	uint16_t fb[LCD_HEIGHT][LCD_WIDTH];
 };
 
 /**
@@ -50,6 +74,52 @@ uint8_t gb_rom_read(struct gb_s *gb, const uint_fast32_t addr)
 {
 	const struct priv_t * const p = (const struct priv_t *)gb->direct.priv;
 	return p->rom[addr];
+}
+
+/**
+ * Returns a two bytes from the ROM file at the given address.
+ */
+uint16_t gb_rom_read_16bit(struct gb_s *gb,const uint_fast32_t addr) {
+      const uint8_t *src = &((const struct priv_t *)gb->direct.priv)->rom[addr];
+      // Alignment check, not required for all platforms. ESP32 series mcu flash memory and psram sources *require* this
+      if ((uintptr_t)src & 1) {
+          // fallback to safe 8-bit reads when not aligned
+          return ((uint16_t)src[0]) | ((uint16_t)src[1] << 8);          
+      } 
+      return *(uint16_t *)src;
+  /* ISO C version below, above may require -fno-strict-aliasing */
+  /*
+      const uint8_t *src = &((const struct priv_t *)gb->direct.priv)->rom[addr];
+      uint16_t val;
+      memcpy(&val, src, sizeof(val));
+      return val;
+  */
+}
+
+/**
+ * Returns four bytes from the ROM file at the given address.
+ */
+uint32_t gb_rom_read_32bit(struct gb_s *gb, const uint_fast32_t addr) {
+    const uint8_t *src =
+        &((const struct priv_t *)gb->direct.priv)->rom[addr];
+
+    // Alignment check: ESP32 flash / PSRAM require 32-bit alignment
+    if ((uintptr_t)src & 3) {
+        // fallback to safe 8-bit reads when not aligned
+        return ((uint32_t)src[0]) |
+               ((uint32_t)src[1] << 8) |
+               ((uint32_t)src[2] << 16) |
+               ((uint32_t)src[3] << 24);
+    }
+
+    return *(uint32_t *)src;
+
+    /* ISO C version below, above may require -fno-strict-aliasing */
+    /*
+    uint32_t val;
+    memcpy(&val, src, sizeof(val));
+    return val;
+    */
 }
 
 /**
@@ -120,64 +190,50 @@ void gb_error(struct gb_s *gb, const enum gb_error_e gb_err, const uint16_t val)
   free(priv->rom);
 }
 
+
+
 #if ENABLE_LCD
 /**
  * Draws scanline into framebuffer.
  */
-void lcd_draw_line(struct gb_s *gb, const uint8_t pixels[160],
-		   const uint_fast8_t line)
-{
-	struct priv_t *priv = (priv_t*)gb->direct.priv;
-	const uint32_t palette[] = { 0xFFFFFF, 0xA5A5A5, 0x525252, 0x000000 };
-
-	for(unsigned int x = 0; x < LCD_WIDTH; x++)
-		priv->fb[line][x] = palette[pixels[x] & 3];
-}
+void lcd_draw_line(struct gb_s *gb, const uint8_t pixels[160],  
+      const uint_fast8_t line) {  
+      int yplot=line * DEST_H / LCD_HEIGHT; // (optional) this is our scaling calculation, done once per horizontal line.  
+                                            // Skipping non-visible lines provides a small boost. LCD_HEIGHT is defined in walnut-cgb.h
+      uint16_t (*fb565)[LCD_WIDTH] = ((priv_t *)gb->direct.priv)->fb;
+ 	if (gb->cgb.cgbMode)    
+ 	{ // Gameboy Color RGB565 rendering   
+ 		for (unsigned int x = 0; x < LCD_WIDTH; x++)    
+ 		{    
+                    fb565[yplot][x] = gb->cgb.fixPalette[pixels[x]]; // map colours from current palette   
+ 		}    
+ 	}
+#if WALNUT_GB_12_COLOUR  
+  else  // some titles have 12-color mappings. Some common mappings can be found in the sgb.h file
+  { // Using 12-colour palette  
+        for (unsigned int x = 0; x < LCD_WIDTH; x++)        
+              fb565[yplot][x]=CURRENT_PALETTE_RGB565[ ((pixels[x]&18)>>1) | (pixels[x]&3) ]; // A 12-element uint16_t array  
+  }  
+#else
+ 	else
+  { // Using a 4 colour palette  
+        for (unsigned int x = 0; x < LCD_WIDTH; x++)  
+          fb565[yplot][x]=CURRENT_PALETTE_RGB565[ (pixels[x])&3] ; // A 4-element uint16_t array  
+  }  
+#endif
+}  
 
 // Draw a frame to the display while scaling it to fit.
 // This is needed as the Cardputer's display has a height of 135px,
 // while the GameBoy's has a height of 144px.
-void fit_frame(uint32_t fb[144][160]) {
-  //M5Cardputer.Display.clearDisplay();
-  for(unsigned int i = 0; i < LCD_WIDTH; i++) {
-    for(unsigned int j = 0; j < LCD_HEIGHT; j++) {
-      if(fb[j * LCD_HEIGHT / DEST_H][i] != swap_fb[j][i]) {
-        M5Cardputer.Display.drawPixel((int32_t)DISPLAY_CENTER(i), (int32_t)j, fb[j * LCD_HEIGHT / DEST_H][i]);
-      }
-      swap_fb[j][i] = fb[j * LCD_HEIGHT / DEST_H][i];
-    } 
-  }
+void fit_frame(uint16_t fb[144][160]) {
+  M5Cardputer.Display.drawBitmap(40,0,160,135,fb[0]); // Push the entire image to the screen
+  // if using interlacing this can be done line by line in sync with the rendering for increased speeed
+  // additionally using the second core to handle video(and audio) on ESP32/ESP32-s3 can offer another
+  // noticeable improvement to performance
 }
-
-// Draw a frame to the display without scaling.
-// Not normally called. Edit the code to use this function
-void draw_frame(uint32_t fb[144][160]) {
-  for(unsigned int i = 0; i < LCD_WIDTH; i++) {
-    for(unsigned int j = 0; j < LCD_HEIGHT; j++) {
-      if(fb[j][i] != swap_fb[j][i]) {
-        M5Cardputer.Display.drawPixel((int32_t)i, (int32_t)j, fb[j][i]);
-      }
-      swap_fb[j][i] = fb[j][i];
-    } 
-  }
-}
-
 #endif
 
-// Shorten ROM display names if they're too long.
-// Memory alloc with C strings is hard so this goes unused for now
-//char* clamp_str(char* input) {
-//  if(strlen(input) > 10) {
-//    char* output = (char*)malloc(sizeof(char)*4+sizeof(char)*strlen(input));
-//    for (int i = 0; i < 9; i++) {
-//      output[i] = input[i];
-//    }
-//    sprintf(output, "%s...", input);
-//    return output;
-//  } else {
-//    return input;
-//  }
-//}
 
 void set_font_size(int size) {
   int textsize = M5Cardputer.Display.height() / size;
@@ -344,15 +400,9 @@ char* file_picker() {
   return selected_path;
 }
 
-#if ENABLE_SOUND
-void audioSetup() {
-  // headache. stopped here lol
-}
-#endif
-
 void setup() {
   // put your setup code here, to run once:
-
+  update_palette();
   // Init M5Stack and M5Cardputer libs.
   auto cfg = M5.config();
   // Use keyboard.
@@ -397,7 +447,7 @@ void setup() {
     debugPrint("Error at read_rom_to_ram!!");
   }
 
-  ret = gb_init(&gb, &gb_rom_read, &gb_cart_ram_read, &gb_cart_ram_write, &gb_error, &priv);
+  ret = gb_init(&gb, &gb_rom_read, &gb_rom_read_16bit, &gb_rom_read_32bit, &gb_cart_ram_read, &gb_cart_ram_write, &gb_error, &priv);
 
   if(ret != GB_INIT_NO_ERROR) {
     // error reporting
@@ -483,7 +533,8 @@ void setup() {
     }
 
     /* Execute CPU cycles until the screen has to be redrawn. */
-    gb_run_frame(&gb);
+    gb_run_frame_dualfetch(&gb); // Walnut-CGB's default execution method (16-bit dual-fetch opcode chained dispatch)
+    //gb_run_frame(&gb); can be used if the original Peanut-GB core is desired for comparison or compatibility (with CGB branch merged) 
 
     // Draw the current frame to the screen.
     fit_frame(priv.fb);
@@ -498,8 +549,9 @@ void setup() {
 
     /* If it took more than the maximum allowed time to draw frame,
     * do not delay.
-    * Interlaced mode could be enabled here to help speed up
-    * drawing.
+    * This is a naive frame pacing loop for example purposes
+    * a more robust solution can significantly improve performance.
+    * Suggested improvements: timing debt, auto-frame skip, or advanced pacing logic.
     */
     if(delay < 0)
       continue;
@@ -508,11 +560,6 @@ void setup() {
   }
 }
 
-// Unused as I'm using an infinite while-loop
-// inside the main function because otherwise
-// I'd need to deal with global variables
-// which are stupid (doing that gave me an
-// ambiguous compiler error so I no no wanna)
 void loop() {
 
 }
