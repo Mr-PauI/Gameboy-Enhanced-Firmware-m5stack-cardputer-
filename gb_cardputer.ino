@@ -4,7 +4,7 @@
 #define MAX_FILES 256
 
 #include "M5Cardputer.h"
-// Obtain the latest version of walnut_cgb.h header here https://github.com/Mr-PauI/Walnut-CGB to cotinue
+// Obtain the latest version of walnut_cgb.h header here https://github.com/Mr-PauI/Walnut-CGB to continue
 #include "walnut_cgb.h"
 #include "SD.h"
 
