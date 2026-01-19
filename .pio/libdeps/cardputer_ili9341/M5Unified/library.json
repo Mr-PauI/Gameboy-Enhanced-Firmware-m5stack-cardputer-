@@ -1,0 +1,23 @@
+{
+  "name": "M5Unified",
+  "description": "Library for M5Stack/Core2/Tough/CoreS3/CoreS3SE, M5StickC/C-Plus/C-Plus2, M5CoreInk, M5Paper, M5ATOM, M5STAMP, M5Station, M5Dial, M5DinMeter, M5Capsule, M5Cardputer, M5VAMeter, M5Tab5",
+  "keywords": "M5Unified",
+  "authors": {
+    "name": "M5Stack, lovyan03",
+    "url": "http://www.m5stack.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m5stack/M5Unified.git"
+  },
+  "dependencies": [
+    {
+      "name": "M5GFX",
+      "version": ">=0.2.17"
+    }
+  ],
+  "version": "0.2.11",
+  "frameworks": ["arduino", "espidf", "*"],
+  "platforms": ["espressif32", "native"],
+  "headers": "M5Unified.h"
+}

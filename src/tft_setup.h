@@ -16,8 +16,8 @@
     // --- External driver 320x240 (Default) ---
     #define ILI9341_DRIVER
     // Conservative frequencies (can be increased later)
-    #define SPI_FREQUENCY        10000000
-    #define SPI_READ_FREQUENCY  6000000
+    #define SPI_FREQUENCY        75000000
+    #define SPI_READ_FREQUENCY  6000000     // was 6000000
 #endif
 
 // --- Use HSPI/SPI3 to keep separate from internal display ---
@@ -31,14 +31,14 @@
 // Moved to "alternative" GPIOs to avoid SD conflicts
 #define TFT_SCLK 15
 #define TFT_MOSI 13
-#define TFT_MISO -1 
+#define TFT_MISO 8 
 
 // No touch
 #define TOUCH_CS -1
 
 // Color configuration
-#define TFT_RGB_ORDER TFT_BGR
-#define TFT_INVERSION_OFF
+#define TFT_RGB_ORDER TFT_BGR  // era BGR
+#define TFT_INVERSION_OFF    // era OFF
 
 // --- Fonts ---
 #define LOAD_GLCD
