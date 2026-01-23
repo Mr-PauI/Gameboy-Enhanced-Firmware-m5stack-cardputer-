@@ -1,3 +1,6 @@
 [submodule "peanutgb"]
 	path = peanutgb
 	url = https://github.com/deltabeard/Peanut-GB
+[submodule "walnut-cgb"]
+	path = walnut-cgb
+	url = https://github.com/Mr-PauI/walnut-cgb.git
