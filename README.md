@@ -30,8 +30,10 @@ Press \ to cycle through available display aspect ratios (note gameboy border hi
 
 Press Fn+\ to cycle through available vertical scaling and alignment options
 
-Community made [game shell for the cardputer](https://makerworld.com/en/models/2417770-m5-cardputer-gaming-case-retro-gameboy-edition) by [SmonSE](https://github.com/SmonSE)(controls must be customized to work with this, ie: v and b for start/select)
-<img width="946" height="662" alt="image" src="https://github.com/user-attachments/assets/7c0808f6-ae8d-477d-9402-862000948cb0" />
+| Community Resources |  | 
+|---|---|
+| [D-pad for Cardputer](https://github.com/AndreiVladescu/Cardputer-Accessories) by [Andrei Vladescu](https://github.com/AndreiVladescu) | <img width="570" height="479" alt="image" src="https://github.com/user-attachments/assets/2a963b2c-b259-4b08-9503-869aafc06954" /> |
+| [Game shell for Cardputer](https://makerworld.com/en/models/2417770-m5-cardputer-gaming-case-retro-gameboy-edition) by [SmonSE](https://github.com/SmonSE)(controls must be customized to work with this, ie: v and b for start/select) | <img width="473" height="331" alt="image" src="https://github.com/user-attachments/assets/7c0808f6-ae8d-477d-9402-862000948cb0" /> |
 
 
 List of SGB and Analogue Pocket enhanced titles:
