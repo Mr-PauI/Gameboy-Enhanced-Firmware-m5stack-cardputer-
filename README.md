@@ -24,6 +24,8 @@ Press \ to cycle through available display aspect ratios (note gameboy border hi
 
 Press Fn+\ to cycle through available vertical scaling and alignment options
 
+[<img width="591" height="330" alt="jv2" src="https://github.com/user-attachments/assets/c3404bae-be57-43c7-8a28-4b50d4d7d34c" />](https://youtu.be/SBD8JtFtE9g?si=V15o_fgvVhYyPAbM)
+
 | Community Resources |  | 
 |---|---|
 | [D-pad for Cardputer](https://github.com/AndreiVladescu/Cardputer-Accessories) by [Andrei Vladescu](https://github.com/AndreiVladescu) | <img width="570" height="479" alt="image" src="https://github.com/user-attachments/assets/2a963b2c-b259-4b08-9503-869aafc06954" /> |
